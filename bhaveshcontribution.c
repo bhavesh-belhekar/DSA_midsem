@@ -1,4 +1,5 @@
-void sjf(Process *orig) {
+/* 5) Priority Scheduling (non-preemptive) */
+void priorityScheduling(Process *orig) {
     Process *p = cloneList(orig);
     int n = countList(p), done = 0;
     int time = minArrival(p);
@@ -6,7 +7,7 @@ void sjf(Process *orig) {
         Process *best = NULL, *it = p;
         while (it) {
             if (!it->completed && it->arrival <= time) {
-                if (!best || it->burst < best->burst || (it->burst == best->burst && it->arrival < best->arrival))
+                if (!best || it->priority < best->priority || (it->priority == best->priority && it->arrival < best->arrival))
                     best = it;
             }
             it = it->next;
@@ -17,7 +18,7 @@ void sjf(Process *orig) {
         best->turnaround = best->waiting + best->burst;
         best->completed = 1; done++;
     }
-    printf("\n--- SJF Results ---\n");
+    printf("\n--- Priority Scheduling Results ---\n");
     printResults(p);
     freeList(p);
 }
